@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>АнтиМакс</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- Modal for Import -->
+  <div class="modal" id="importModal">
+    <div class="modal-content">
+      <h3 class="modal-title">Импорт данных</h3>
+      <div class="form-group">
+        <label for="importCode">Код из QR</label>
+        <input type="text" id="importCode" class="form-input" maxlength="30" placeholder="Введите 30-значный код">
+      </div>
+      <div class="form-group">
+        <label for="importFile">Файл экспорта</label>
+        <input type="file" id="importFile" class="form-input" accept=".bin,.dat,.txt">
+      </div>
+      <div class="modal-error" id="importError"></div>
+      <div class="modal-buttons">
+        <button class="btn-primary" type="button" id="confirmImportBtn">Готово</button>
+        <button class="btn-secondary" type="button" id="closeImportBtn">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Export -->
+  <div class="modal" id="exportModal">
+    <div class="modal-content">
+      <h3 class="modal-title">Экспорт данных</h3>
+      <div id="exportContent">
+        <div id="qrContainer" class="qr-container"></div>
+        <div class="export-password" id="exportPassword"></div>
+        <div class="export-instructions">
+          <p>1. Отсканируйте QR-код на телефоне, скопируйте текст.</p>
+          <p>2. Скачайте и передайте файл на устройство.</p>
+          <p>3. В расширении на устройстве выберите импорт.</p>
+        </div>
+      </div>
+      <div class="modal-buttons">
+        <button class="btn-primary" id="saveExportFileBtn" type="button">Сохранить файл</button>
+        <button class="btn-secondary" type="button" id="closeExportBtn">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Add/Edit Chat -->
+  <div class="modal" id="chatModal">
+    <div class="modal-content">
+      <h3 class="modal-title" id="chatModalTitle">Добавить чат</h3>
+      <form id="chatForm">
+        <div class="form-group">
+          <label for="chatName">Название чата</label>
+          <input type="text" id="chatName" class="form-input">
+        </div>
+        <div class="form-group">
+          <label for="chatKey">Ключ шифрования</label>
+          <input type="text" id="chatKey" class="form-input">
+        </div>
+        <div class="form-group checkbox-group">
+          <div class="form-group">
+            <label for="chatAutoEncryption">
+              <input type="checkbox" id="chatAutoEncryption" class="form-checkbox">
+              Автошифрование
+            </label>
+            <small class="form-help">
+              При открытии чата будет автоматически включён режим шифрования и дешифрования сообщений.
+            </small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="chatMessenger">Мессенджер</label>
+          <select id="chatMessenger" class="form-input">
+            <option value="">Не выбран</option>
+            <option value="vk">ВКонтакте</option>
+            <option value="max">Макс</option>
+            <option value="tg">Telegram</option>
+          </select>
+        </div>
+        <div class="form-group" id="messengerIdGroup" style="display: none;">
+          <label for="chatMessengerId">ID чата в мессенджере</label>
+          <input type="text" id="chatMessengerId" class="form-input">
+        </div>
+        <div class="modal-error" id="chatError"></div>
+        <div class="modal-buttons">
+          <button type="submit" class="btn-primary" id="saveChatBtn">Сохранить</button>
+          <button type="button" class="btn-secondary" id="closeChatBtn">Отмена</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal for Delete Confirmation -->
+  <div class="modal" id="deleteModal">
+    <div class="modal-content">
+      <h3 class="modal-title">Подтверждение удаления</h3>
+      <p class="modal-text">Вы уверены, что хотите удалить этот чат?</p>
+      <div class="modal-error" id="deleteError"></div>
+      <div class="modal-buttons">
+        <button class="btn-danger" id="confirmDeleteBtn" type="button">Удалить</button>
+        <button class="btn-secondary" id="closeDeleteBtn" type="button">Отмена</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Profile -->
+  <div class="modal" id="profileModal">
+    <div class="modal-content">
+      <h3 class="modal-title" id="profileModalTitle">Новый профиль</h3>
+      <form id="profileForm">
+        <div class="form-group">
+          <label for="profileName">Имя профиля</label>
+          <input type="text" id="profileName" class="form-input" required maxlength="16">
+        </div>
+        <div class="modal-error" id="profileError"></div>
+        <div class="modal-buttons">
+          <button type="submit" class="btn-primary">Сохранить</button>
+          <button type="button" class="btn-secondary" id="closeProfileBtn">Отмена</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="top-section">
+    <div class="header-title-container">
+      <div class="header-title">
+        <span class="header-main-text"><span class="anti-text">Анти</span>Макс</span>
+        <span class="header-sub-text">шифрование чатов 🔒</span>
+      </div>
+    </div>
+    <div class="import-export-buttons">
+      <button class="text-btn import-btn" type="button">Импорт</button>
+      <span class="separator" aria-hidden="true">/</span>
+      <button class="text-btn export-btn" type="button">Экспорт</button>
+    </div>
+  </div>
+
+  <!-- Profiles Section -->
+  <div class="profiles-section">
+    <select id="profileSelect" class="profile-select"></select>
+    <div class="profile-actions">
+      <button id="shareBtn" class="profile-action-btn share-btn" title="Поделиться ключом">🔗</button>
+      <button class="profile-action-btn add-btn" id="addProfileBtn" title="Новый профиль">+</button>
+      <button class="profile-action-btn edit-btn" id="editProfileBtn" title="Редактировать">✏️</button>
+      <button class="profile-action-btn delete-btn" id="deleteProfileBtn" title="Удалить">✕</button>
+    </div>
+  </div>
+
+  <!-- Chats Panel -->
+  <div class="chats-panel">
+    <div class="chats-header">
+      <h2 class="chats-title">Мои чаты</h2>
+      <button class="btn-add-chat" id="addChatBtn" title="Добавить чат">+</button>
+    </div>
+    <div class="chats-list" id="chatsList">
+      <!-- Chat cards will be inserted here -->
+    </div>
+  </div>
+
+  <!-- Modal for Encrypt -->
+  <div class="modal" id="encryptModal">
+    <div class="modal-content">
+      <h3 class="modal-title">Шифрование сообщения</h3>
+      <textarea class="modal-textarea" placeholder="Введите текст для шифрования..." rows="6"></textarea>
+      <div class="modal-error" id="encryptError"></div>
+      <div class="modal-buttons">
+        <button class="btn-primary" type="button" id="encryptAndCopyBtn">Зашифровать и скопировать</button>
+        <button class="btn-secondary" type="button" id="closeEncryptBtn">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Share Public Key Modal -->
+  <div id="shareModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="shareModalTitle">Поделиться публичным ключом</h3>
+      </div>
+      <div class="modal-body">
+        <p class="share-description">
+          <br>Делитесь этим ключом, чтобы вам писали зашифрованные сообщения.
+        </p><br>
+        <div class="share-key-container">
+          <textarea id="shareKeyText" class="modal-textarea" readonly></textarea>
+        </div>
+        <div id="shareQrContainer" class="qr-container"></div>
+        <div class="share-actions">
+          <button id="copyShareKeyBtn" class="btn-primary">Скопировать ключ</button>
+          <button id="closeShareBtn" class="btn btn-secondary">Закрыть</button>
+        </div>
+        <div id="shareFeedback" class="share-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Decrypt -->
+  <div class="modal" id="decryptModal">
+    <div class="modal-content">
+      <h3 class="modal-title">Расшифровка сообщения</h3>
+      <textarea class="modal-textarea" readonly rows="6"></textarea>
+      <div class="modal-buttons">
+        <button class="btn-secondary" type="button" id="closeDecryptBtn">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="qrcode.min.js"></script>
+  <script type="module" src="./popup.js"></script>
+</body>
+
+</html>

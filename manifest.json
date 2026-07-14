@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "АнтиМакс",
+  "short_name": "АнтиМакс",
+  "version": "1.0.0",
+  "minimum_chrome_version": "109",
+  "description": "Шифрование сообщений.",
+  "icons": {
+    "16": "16.png",
+    "48": "48.png",
+    "128": "128.png"
+  },
+  "permissions": [
+    "storage",
+    "clipboardRead",
+    "clipboardWrite"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "host_permissions": [
+    "*://vk.com/*",
+    "*://*.vk.ru/*",
+    "*://max.ru/*",
+    "*://*.max.ru/*",
+    "*://*.telegram.org/*",
+    "*://telegram.org/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://vk.com/*",
+        "*://*.vk.ru/*",
+        "*://max.ru/*",
+        "*://*.max.ru/*",
+        "*://*.telegram.org/*",
+        "*://telegram.org/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
