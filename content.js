@@ -1708,6 +1708,14 @@
 
                     originalInput.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText', data: inviteText }));
                 }
+
+                // Отправляем сообщение сразу после вставки текста
+                setTimeout(() => {
+                    const sendBtn = currentAdapter.getSendButton();
+                    if (sendBtn) {
+                        currentAdapter.triggerSend(originalInput, sendBtn);
+                    }
+                }, 150);
             }
 
             closeModal();

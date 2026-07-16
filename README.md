@@ -2,8 +2,7 @@
 
 **АнтиМакс** — это расширение для браузера Chrome (в будущем - iOS/android), которое позволяет вам шифровать и расшифровывать сообщения для переписки в популярных мессенджерах (ВКонтакте, Макс, Telegram). Ваши сообщения защищены, а получатель может их прочитать только с помощью правильного ключа шифрования.
 
-<img src="https://github.com/antimax-dev/chrome-extension/blob/main/screenshots/popup.png" width="300" height="179">
-<img src="https://github.com/antimax-dev/chrome-extension/blob/main/screenshots/chat.png" width="300" height="150">
+<img src="https://github.com/antimax-dev/chrome-extension/blob/main/screenshots/popup.png" width="300" height="179"> <img src="https://github.com/antimax-dev/chrome-extension/blob/main/screenshots/chat.png" width="300" height="150">
 
 ---
 
