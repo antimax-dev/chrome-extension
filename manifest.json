@@ -4,7 +4,7 @@
   "short_name": "АнтиМакс",
   "version": "1.0.1",
   "minimum_chrome_version": "109",
-  "description": "Шифрование сообщений.",
+  "description": "Шифрование в мессенджерах.",
   "icons": {
     "16": "16.png",
     "48": "48.png",
