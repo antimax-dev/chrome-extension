@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "АнтиМакс",
-  "short_name": "АнтиМакс",
+  "name": "АнтиМакс: шифрование сообщений",
+  "short_name": "АнтиМакс: шифрование сообщений",
   "version": "1.0.1",
   "minimum_chrome_version": "109",
-  "description": "Шифрование в мессенджерах.",
+  "description": "Шифрование сообщений в VK, Max, Telegram.",
   "icons": {
     "16": "16.png",
     "48": "48.png",
