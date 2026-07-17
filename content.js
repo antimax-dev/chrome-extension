@@ -856,8 +856,12 @@
 
             const ourKey = profile.publicKey;
 
-            // Ищем элементы, которые могут содержать текст
-            const allElements = document.querySelectorAll('div, span, p, li, td, a');
+            // Получаем область ТОЛЬКО текущего диалога
+            const messagesArea = currentAdapter ? currentAdapter.getMessagesArea() : null;
+            if (!messagesArea) return false;
+
+            // Ищем элементы ТОЛЬКО в области сообщений
+            const allElements = messagesArea.querySelectorAll('div, span, p, li, td, a');
 
             for (const el of allElements) {
                 // Пропускаем наши собственные элементы
@@ -873,7 +877,6 @@
 
             return false;
         } catch (e) {
-            // console.warn('Ошибка проверки ключа на странице:', e);
             return false;
         }
     }
@@ -915,17 +918,18 @@
     }
 
     async function scanForInvites() {
-        // Получаем публичный ключ текущего профиля один раз
         let currentPublicKey = null;
         try {
             const pm = await getCurrentProfileManager();
             const profile = pm.getCurrentProfile();
             if (profile) currentPublicKey = profile.publicKey;
         } catch (e) {
-            // ignore
         }
 
-        const allElements = document.querySelectorAll('div, span, p, li, td');
+        const messagesArea = currentAdapter ? currentAdapter.getMessagesArea() : document.body;
+        if (!messagesArea) return;
+
+        const allElements = messagesArea.querySelectorAll('div, span, p, li, td');
 
         for (const el of allElements) {
             if (el.closest('#' + INVITE_MODAL_ID)) continue;
@@ -1105,6 +1109,9 @@
             this._stylesInjected = false;
         }
 
+        getMessagesArea() {
+            return document.body; // По умолчанию — весь документ
+        }
         findAnchorButton() { throw new Error('Not implemented'); }
         createButtonWrapper(button) { throw new Error('Not implemented'); }
         getInputContainer() { throw new Error('Not implemented'); }
@@ -1365,6 +1372,10 @@
 
         findAnchorButton() { return document.querySelector('.StickerEmojiMenuPopper'); }
 
+        getMessagesArea() {
+            return document.querySelector('.ConvoMain')
+        }
+
         createButtonWrapper(button) {
             const wrapper = document.createElement('div');
             wrapper.className = 'StickerEmojiMenuPopper';
@@ -1401,9 +1412,14 @@
         }
 
         findAnchorButton() {
-            return document.querySelector('.main-button');
+            return document.querySelector('.messages-layout')
         }
 
+        getMessagesArea() {
+            return document.querySelector('.messages-container') ||
+                document.querySelector('.chat-background') ||
+                document.body;
+        }
         createButtonWrapper(button) {
             button.className = 'Button composer-action-button default translucent round';
             button.style.cssText = this.config.buttonStyles;
@@ -1449,6 +1465,10 @@
             return document.querySelector('.toggle-emoticons');
         }
 
+        getMessagesArea() {
+            return document.querySelector('.chat')
+        }
+
         createButtonWrapper(button) {
             button.className = 'btn-icon rp';
             button.style.cssText = this.config.buttonStyles;
@@ -1487,6 +1507,10 @@
 
         findAnchorButton() {
             return document.querySelector('.button[aria-label="Открыть меню стикеров"]');
+        }
+
+        getMessagesArea() {
+            return document.querySelector('.openedChat')
         }
 
         createButtonWrapper(button) {
