@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "АнтиМакс: сквозное шифрование VK, Telegram, Max",
-  "short_name": "АнтиМакс: сквозное шифрование VK, Telegram, Max",
+  "name": "АнтиМакс: сквозное шифрование VK, Max, Telegram",
+  "short_name": "АнтиМакс: сквозное шифрование VK, Max, Telegram",
   "version": "1.0.2",
   "minimum_chrome_version": "109",
   "description": "Сквозное шифрование сообщений в VK, Max, Telegram.",
