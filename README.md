@@ -20,7 +20,7 @@
 
 ### Из Chrome Web Store (рекомендуется)
 
-Пока недоступно.
+[Установить](https://chromewebstore.google.com/detail/daaebmglpcmpbeclldjdimknnmbddmak)
 
 ### Вручную
 
