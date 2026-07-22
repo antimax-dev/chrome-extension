@@ -121,7 +121,7 @@ extension/
 Если у вас возникли вопросы или проблемы:
 
 - Напишите на почту: antimax.official@proton.me
-
+- [Подписывайтесь Telegram канал: @antimax_official](https://t.me/antimax_official)
 ---
 
 **АнтиМакс** — ваш надёжный союзник в борьбе за приватность! 🔐
