@@ -734,8 +734,8 @@
             const chat = findChatByMessengerId(profile, messenger, messengerId);
             if (!chat || !chat.key) return;
 
-            if (chat.autoEncryption === false) return;
-
+            if (chat.autoEncryption === false && !isSecretInputActive) return;
+            
             const walker = document.createTreeWalker(
                 document.body,
                 NodeFilter.SHOW_TEXT,
